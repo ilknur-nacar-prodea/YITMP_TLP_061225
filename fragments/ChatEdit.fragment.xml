@@ -1,0 +1,79 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
+	<Dialog title="{i18n>Message}" resizable="true" contentWidth="800%" draggable="true">
+		<VBox class="sapUiSmallMargin" width="50rem">
+			<FeedInput vAlign="Middle" value="" id="chatInputId" showIcon="false" post="onConfirmChatEdit" class="sapUiSmallMarginTopBottom"/>
+		</VBox>
+		<!--<List items="{ path: 'oViewModel>tableDocShow3', templateShareable: false }" id="idDocListD1" headerText="Dosyalar">-->
+		<!--	<ActionListItem icon="sap-icon://action" press="onActionPressedDR" text="{oViewModel>Fname}">-->
+		<!--		<customData>-->
+		<!--			<core:CustomData key="myCustomKey" value="{DocList2>url}" writeToDom="true"/>-->
+		<!--		</customData>-->
+		<!--	</ActionListItem>-->
+		<!--</List>-->
+		<Table mode="SingleSelectMaster" id="idDosyalar" selectionChange="onTableRowSelectDosya" visible="true"
+			items="{oViewModel>/talepMsg/0/tableDocShow3}">
+			<columns>
+				<Column>
+					<Text text="Dosya Adı"/>
+				</Column>
+				<Column >
+					<Text text=""/>
+				</Column>
+				<Column >
+					<Text text=""/>
+				</Column>
+				<Column >
+					<Text text=""/>
+				</Column>
+				<Column >
+					<Text text=""/>
+				</Column>
+				<Column >
+					<Text text=""/>
+				</Column>
+				<Column >
+					<Text text=""/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem vAlign="End">
+					<cells>
+						<Text class="myClass" id="myText" text="{oViewModel>Fname}"/>
+						<Text width="500px" visible="false" text="{oViewModel>url}"/>
+						<Text width="500px" visible="false" text="{oViewModel>Docid}"/>
+						<Text width="500px" visible="false" text=""/>
+						<Text width="500px" visible="false" text=""/>
+						<Text width="500px" visible="false" text=""/>
+						<Button type="Reject" id="idDosyaSil" icon="sap-icon://less" class="sapUiLargeMarginBegin" press="onPressDocSil"></Button>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+		<endButton>
+			<Button text="{i18n>Close}" press="onCloseChatEdit" type="Reject"/>
+		</endButton>
+	</Dialog>
+	<!--<Dialog id="idSettings" draggable="true" title="{i18n>Settings_Title}">-->
+	<!--	<content>-->
+	<!--		<form:SimpleForm id="idSettings_Form" backgroundDesign="Transparent" editable="true">-->
+	<!--			<form:content>-->
+	<!--				<Label text="{i18n>Settings_DeliveryStatus}"/>-->
+	<!--				<Input id="idSettings_storeId"/>-->
+	<!--			</form:content>-->
+	<!--		</form:SimpleForm>-->
+	<!--	</content>-->
+	<!--	<buttons>-->
+	<!--		<Button text="SAVE" press="onSettingsSaveBtn"/>-->
+	<!--		<Button text="CANCEL" press="onSettingsCancelBtn"/>-->
+	<!--	</buttons>-->
+	<!--</Dialog>-->
+	<!--<FeedInput id="chatEditFeedInput" value="" post="onPostChatEdit" icon="sap-icon://message-popup" class="sapUiSmallMarginTopBottom"-->
+	<!--	buttonTooltip="Gönder" />-->
+	<!--<SelectDialog id="chatEditDialog" title="Mesaj" items="{oViewBindModel>/ModulBilgileri}" search="_handleValueHelpSearch"-->
+	<!--	confirm="_handleValueHelpClose" selectionChange="onInputAc" cancel="_handleValueHelpClose1" multiSelect="true" contentWidth="40%">-->
+	<!--	<InputListItem label="{oViewBindModel>Ddtext} - {oViewBindModel>DomvalueL}">-->
+	<!--		<Input placeholder="Gün" editable="false" value="{oViewBindModel>Gun}" width="200px"/>-->
+	<!--	</InputListItem>-->
+	<!--	<StandardListItem iconDensityAware="false" iconInset="false" title="{oViewBindModel>Ddtext}" description="{oViewBindModel>Ddtext}"/>-->
+	<!--</SelectDialog>-->
+</core:FragmentDefinition>

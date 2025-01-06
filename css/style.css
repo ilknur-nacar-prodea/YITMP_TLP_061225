@@ -1,0 +1,23 @@
+.sapMITH {
+    vertical-align: top;
+    font-size: 0.7rem !important;
+    display: flex;
+    align-items: flex-start;
+    background-color: #fff;
+    border-bottom: none;
+    box-shadow: 0 0.125rem 0.125rem 0 rgba(85, 107, 130, 0.05), inset 0 -0.0625rem 0 0 #d9d9d9;
+    position: relative;
+    padding: 0 2rem;
+}
+
+.sapMITH {
+    vertical-align: top;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: flex-start;
+    background-color: #fff;
+    border-bottom: none;
+    box-shadow: 0 0.125rem 0.125rem 0 rgba(85,107,130,0.05), inset 0 -0.0625rem 0 0 #d9d9d9;
+    position: relative;
+    padding: 0 2rem;
+}

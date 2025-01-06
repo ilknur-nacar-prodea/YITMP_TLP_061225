@@ -1,0 +1,6 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog id="anaTicketNoSelectDialogID" title="{i18n>AnaTicketNo}" items="{/AnaTicketNoSHSet}" search="onSearchAnaTicketNoValueHelp"
+		confirm="onConfirmAnaTicketNoValueHelp" cancel="onCloseAnaTicketNoValueHelp">
+		<StandardListItem id="anaTicketNoListItemID" title="{AnaTakipNo}" description="{AltTakipNo}" info="Musteri" iconDensityAware="false" iconInset="false" type="Active"/>
+	</SelectDialog>
+</core:FragmentDefinition>

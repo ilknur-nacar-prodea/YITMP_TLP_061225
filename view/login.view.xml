@@ -1,0 +1,16 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="app.YITMP_TLP.controller.login"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<App id="app">
+		<pages>
+			<Page title="IT Management Portal Login" id="pages">
+				<!--	<FlexBox id="idFBox" alignItems="Center" justifyContent="Center" height="80%">
+					<VBox id="loginVBox">
+						<Input id="idUser" placeholder="Kullanıcı Adı" class="sapUiSmallMarginBottom" maxLength="30"/>
+						<Input id="isPass" placeholder="Şifre" type="Password" maxLength="50"/>
+						<Button id="idLoginButton" type="Emphasized" text="Giriş" press=".onLogon" width="250px"/>
+					</VBox>
+				</FlexBox>-->
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

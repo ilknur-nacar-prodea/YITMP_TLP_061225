@@ -1,0 +1,80 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:l="sap.ui.layout">
+	<TableSelectDialog id="idTableSicilArama" noDataText="Veri Bulunamadı" title="Danışman Seç" search=".handleSearch" confirm=".handleClose"
+		cancel=".handleClose" items="{oViewModel>/siciller}" multiSelect="true">
+		<ColumnListItem vAlign="Middle">
+			<cells>
+				<Text text="{oViewModel>Consultant}"/>
+				<Text text="{oViewModel>Consultantdesc}"/>
+				<Text text="{oViewModel>Ymodul}"/>
+				<RadioButton selected="{oViewModel>Yonetici}" text="{Yonetici}"/>
+			</cells>
+		</ColumnListItem>
+		<columns>
+			<Column width="3rem">
+				<Text text="Danışman"></Text>
+			</Column>
+			<Column width="3rem">
+				<Text text="Danışman Adı"></Text>
+			</Column>
+			<Column width="3rem">
+				<Text text="Modül"></Text>
+			</Column>
+			<Column width="3rem">
+				<Text text="Yönetici"></Text>
+			</Column>
+		</columns>
+	</TableSelectDialog>
+	<!--	<Dialog id="SicilValueHelp" title="Danışman Seç" titleAlignment="Center" icon="sap-icon://search" contentWidth="35%"
+		class="sapUiSizeCompact">
+		<fb:FilterBar search="handleSicilAra" showFilterConfiguration="false" useToolbar="false" class="sapUiSizeCompact"
+			filterContainerWidth="10rem">
+			<fb:filterGroupItems>
+				<fb:FilterGroupItem groupName="G1" name="Consultant" visibleInFilterBar="true" label="Danışman Kullanıcı Adı">
+					<fb:control>
+						<Input value="{/filterData/Consultant}" maxLength="10" submit="handleSicilAra"/>
+					</fb:control>
+				</fb:FilterGroupItem>
+				<fb:FilterGroupItem groupName="G1" name="Consultantdesc" visibleInFilterBar="true" label="Danışman Ad Soyad">
+					<fb:control>
+						<Input value="{/filterData/Consultantdesc}" maxLength="35" submit="handleSicilAra"/>
+					</fb:control>
+				</fb:FilterGroupItem>
+			</fb:filterGroupItems>
+		</fb:FilterBar>
+		<Table id="idTableSicilArama" width="auto" items="{/items}" noDataText="Girdiğiniz kriterlere ait veri bulunamadı." growing="true"
+			growingThreshold="40" growingScrollToLoad="true" class="sapUiResponsiveMargin sapUiSizeCompact" mode="MultiSelect"
+			selectionChange="sActionsicil">
+			<columns>
+				<Column width="3rem">
+					<Text text="Danışman"></Text>
+				</Column>
+				<Column width="3rem">
+					<Text text="Danışman Adı"></Text>
+				</Column>
+				<Column width="3rem">
+					<Text text="Modül"></Text>
+				</Column>
+				<Column width="3rem">
+					<Text text="Yönetici"></Text>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem type="Active" press="handleSicilSec">
+					<cells>
+						<Text text="{Consultant}"/>
+						<Text text="{Consultantdesc}"/>
+						<Text text="{Ymodul}"/>
+						<RadioButton selected="{Yonetici}" text="{Yonetici}" select="onPressRadioYonet"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+		<beginButton>
+			<Button class="sapUiSizeCompact" text="Seç" type="Accept" icon="sap-icon://sys-cancel" press="sicilValueHelpSelected"/>
+		</beginButton>
+		<endButton>
+			<Button class="sapUiSizeCompact" text="Kapat" type="Reject" icon="sap-icon://sys-cancel" press="SicilValueHelpClose"/>
+		</endButton>
+	</Dialog>-->
+</core:FragmentDefinition>

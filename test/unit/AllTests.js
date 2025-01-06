@@ -1,0 +1,1 @@
+sap.ui.define(["app/YITMP_TLP/test/unit/controller/login.controller"],function(){"use strict"});

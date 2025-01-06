@@ -1,0 +1,622 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:smartVariant="sap.ui.comp.smartvariants"
+  xmlns:core="sap.ui.core" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns:smartForm="sap.ui.comp.smartform"
+  xmlns:smartField="sap.ui.comp.smartfield" xmlns:l="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:ui="sap.ui.table"
+  xmlns:smartTable="sap.ui.comp.smarttable" xmlns:table="sap.ui.table" xmlns:m="sap.m" xmlns:semantic="sap.m.semantic"
+  xmlns:fb="sap.ui.comp.filterbar" controllerName="app.YITMP_TLP.controller.MasterDetail">
+  <Shell id="shell">
+    <App id="app">
+      <pages>
+        <Page id="page" navButtonType="icon" showNavButton="false" navButtonTooltip="Çıkış" navButtonPress="_handleLogout">
+          <customHeader>
+            <Bar>
+              <contentRight>
+                <Button text="Oturumu Kapat" icon="sap-icon://log" type="Reject" press="_handleLogout1"/>
+              </contentRight>
+            </Bar>
+          </customHeader>
+          <content>
+            <SplitContainer>
+              <masterPages>
+                <semantic:MasterPage id="MasterList"
+                  title="{= ${InputModel>/Role} === '01' ? 'İsteklerim' : ${InputModel>/Role} === '10' ? 'Atanan İstekler' : ${InputModel>/Role} === '20' ? 'Onayımda Bekleyenler' : ''}"
+                  navButtonPress="onNav" showNavButton="false" busyIndicatorSize="Large">
+                  <semantic:content>
+                    <!--<Button id="clearButton" press=".onClear" text="Temizle" type="Transparent"/>-->
+                    <fb:FilterBar id="idView2Filter" reset="onReset" clear="onClear" search="GetFilter" showRestoreButton="true" showClearOnFB="true">
+                      <fb:filterGroupItems>
+                        <fb:FilterGroupItem groupName="__$INTERNAL$" name="A" label="İstek Tipi" visibleInFilterBar="true">
+                          <fb:control>
+                            <Label text="İstek Tipi"/>
+                            <ComboBox selectionChange="GetFilter" id="idType" items="{oViewBindModel>/TalepTipiBilgileri}">
+                              <core:ListItem key="{oViewBindModel>DomvalueL}" text="{oViewBindModel>Ddtext}"/>
+                            </ComboBox>
+                          </fb:control>
+                        </fb:FilterGroupItem>
+                        <fb:FilterGroupItem groupName="__$INTERNAL$" name="B" label="İstek Durumu" visibleInFilterBar="true">
+                          <fb:control>
+                            <Label text="İstek Durumu"/>
+
+                              <MultiComboBox id="inpStatu" selectionChange="handleSelectionChange" selectionFinish="handleSelectionFinish"
+                              items="{oViewBindModel>/StatuBilgilerifilter}">
+                              <core:ListItem key="{oViewBindModel>DomvalueL}" text="{oViewBindModel>Ddtext}"/>
+                            </MultiComboBox>
+                          </fb:control>
+                        </fb:FilterGroupItem>
+                        <fb:FilterGroupItem groupName="__$INTERNAL$" name="D" label="Modul" visibleInFilterBar="true">
+                          <fb:control>
+                            <Label text="Modul"/>
+                            <ComboBox selectionChange="GetFilter" id="inpModul" items="{oViewBindModel>/ModulBilgileri}">
+                              <core:ListItem key="{oViewBindModel>DomvalueL}" text="{oViewBindModel>DomvalueL} - {oViewBindModel>Ddtext}"/>
+                            </ComboBox>
+                          </fb:control>
+                        </fb:FilterGroupItem>
+                        <fb:FilterGroupItem id="inpCompany1" groupName="__$INTERNAL$" name="E" label="Müşteri" visibleInFilterBar="true">
+                          <fb:control>
+                            <Label text="Müşteri"/>
+                            <ComboBox selectionChange="GetFilter" id="inpCompany" items="{oViewBindModel>/CompanyBilgileri}">
+                              <core:ListItem key="{oViewBindModel>DomvalueL}" text="{oViewBindModel>DomvalueL} - {oViewBindModel>Ddtext}"/>
+                            </ComboBox>
+                          </fb:control>
+                        </fb:FilterGroupItem>
+                        <fb:FilterGroupItem groupName="__$INTERNAL$" name="F" label="İstek No" visibleInFilterBar="true">
+                          <fb:control>
+                            <Label text="İstek No"/>
+                            <!--<ComboBox id="inpCompany" items="{oViewBindModel>/CompanyBilgileri}">-->
+                            <!--  <core:ListItem key="{oViewBindModel>DomvalueL}" text="{oViewBindModel>DomvalueL} - {oViewBindModel>Ddtext}"/>-->
+                            <!--</ComboBox>-->
+                            <Input change="GetFilter" id="inpIstekNo" valueHelpRequest="onSearchReqId" showValueHelp="true"></Input>
+                          </fb:control>
+                        </fb:FilterGroupItem>
+                        <fb:FilterGroupItem id="inpPriority1" groupName="__$INTERNAL$" name="J" label="Öncelik" visibleInFilterBar="false">
+                          <fb:control>
+                            <Label text="Öncelik"/>
+                            <ComboBox selectionChange="GetFilter" id="inpPriority" items="{oViewBindModel>/OncelikBilgileri}">
+                              <core:ListItem key="{oViewBindModel>DomvalueL}" text="{oViewBindModel>DomvalueL} - {oViewBindModel>Ddtext}"/>
+                            </ComboBox>
+                          </fb:control>
+                        </fb:FilterGroupItem>
+                        <fb:FilterGroupItem groupName="__$INTERNAL$" name="I" label="Başlık" visibleInFilterBar="false">
+                          <fb:control>
+                            <Label text="Başlık"/>
+                            <Input change="GetFilter" id="inpHeader"></Input>
+                          </fb:control>
+                        </fb:FilterGroupItem>
+                        <fb:FilterGroupItem groupName="__$INTERNAL$" name="G" label="İstek Tarihi" visibleInFilterBar="false">
+                          <fb:control>
+                            <Label text="İstek Tarihi"/>
+                            <DatePicker id="inpDate" change="GetFilter"/>
+                          </fb:control>
+                        </fb:FilterGroupItem>
+                        <fb:FilterGroupItem groupName="__$INTERNAL$" name="H" label="Deadline" visibleInFilterBar="false">
+                          <fb:control>
+                            <Label text="Deadline"/>
+                            <DatePicker id="inpDeadline" change="GetFilter"/>
+                          </fb:control>
+                        </fb:FilterGroupItem>
+                      </fb:filterGroupItems>
+                    </fb:FilterBar>
+                    <!-- For client side filtering add t.onSearchhis to the items attribute: parameters: {operationMode: 'Client'}}" -->
+                    <List id="list" width="auto" class="sapFDynamicPageAlignContent"
+                      items="{ path: 'oViewModel>/tablemaster',  sorter: { path: 'Requisitionid', descending: true, group: false }, groupHeaderFactory: '.createGroupHeader' }"
+                      busyIndicatorDelay="{masterView>/delay}" noDataText="{masterView>/noDataText}"
+                      mode="{= ${device>/system/phone} ? 'None' : 'SingleSelectMaster'}" growing="false" growingScrollToLoad="true" growingThreshold="5"
+                      updateFinished=".onUpdateFinished" selectionChange=".onSelectionChange">
+                      <items>
+                        <ObjectListItem type="Navigation" press=".onSelectionChange" title="İstek No: {oViewModel>Requisitionid}">
+                          <firstStatus>
+                            <ObjectStatus
+                              text="{= ${oViewModel>Statu} === '01' ? 'Yeni İstek Yaratıldı' : ${oViewModel>Statu} === '02' ? 'Efor Bekliyor' : ${oViewModel>Statu} === '03' ? 'Atama Bekliyor' : ${oViewModel>Statu} === '04' ? 'Analiz'
+ :${oViewModel>Statu} === '05' ? 'Ya+
+pılıyor' :${oViewModel>Statu} === '06' ? 'Test' :${oViewModel>Statu} === '07' ? 'Müşteri Onayı Bekleniyor' :${oViewModel>Statu} === '08' ? 'Müşteri Revize Talebi' :${oViewModel>Statu} === '09' ? 'İstek Reddedildi' : ${oViewModel>Statu} === '10' ? 'Tamamlandı' : ${oViewModel>Statu} === '20' ? 'TS Doküman Hazırlığı' :${oViewModel>Statu} === '21' ? 'Modül Uyarlama' :${oViewModel>Statu} === '21' ? 'Modül Uyarlama' :${oViewModel>Statu} === '22' ? 'Kod Geliştirme' :${oViewModel>Statu} === '31' ? 'Kullanıcı Testinde' :${oViewModel>Statu} === '30' ? 'Danışman Testi' :''}"
+                              class="onObjektStatus"/>
+                          </firstStatus>
+                          <secondStatus>
+                            <ObjectStatus
+                              text="{path:'oViewModel>Requisitiondate', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd.MM.yyyy' , UTC: true }}"
+                              class="onObjektStatus1"/>
+                          </secondStatus>
+                          <ObjectAttribute text="{oViewModel>Userdescription}"/>
+                          <ObjectAttribute text="Müşteri: {oViewModel>Company}"/>
+                          <ObjectAttribute text="Başlık: {oViewModel>Header}"/>
+                        </ObjectListItem>
+                      </items>
+                    </List>
+                  </semantic:content>
+                  <semantic:customFooterContent>
+                    <Button text="{i18n>export2Excel}" press="onExport2Excel" visible="true" enabled="true"/>
+                  </semantic:customFooterContent>
+                  <!--<footer>-->
+                  <!--<Toolbar>-->
+                  <!--  <ToolbarSpacer/>-->
+                  <!--  <:Button id="deleteBtn" text="{i18n>Delete}" press="onDeletePress" type="Reject" width="auto" class="sapUiSmallMargin"></Button>-->
+                  <!--  <Button id="addBtn" text="{i18n>Add}" press="onAddPress" type="Emphasized" width="auto" class="sapUiSmallMargin"></Button>-->
+                  <!--</Toolbar>-->
+                  <!--</footer>-->
+                </semantic:MasterPage>
+              </masterPages>
+              <detailPages>
+                <semantic:DetailPage title="İstek Detayları" id="ddd">
+                  <semantic:positiveAction>
+                    <semantic:PositiveAction id="eforGirBtnYeni" text="Efor Gir" press="onEforGir" visible="false" enabled="false"/>
+                  </semantic:positiveAction>
+                  <semantic:negativeAction>
+                    <semantic:NegativeAction id="istegiReddetBtnYeni" text="İsteği Reddet" press="onopenRet" visible="false" enabled="false"/>
+                  </semantic:negativeAction>
+                  <semantic:customFooterContent >
+                    <!--<Button text="Danışman Ata" id="danismanAtaBtn" press="onDanAta" visible="{InputModel>/ButtonModelEdit}"-->
+                    <!--  enabled="{InputModel>/ButtonModelEnabled3}"/>-->
+                    <!--<Button text="Efor Onay" id="eforOnayBtn" press="onEforOnay" visible="{InputModel>/ButtonModelEdit1}"-->
+                    <!--  enabled="{InputModel>/ButtonModelEnabledEforOnay}"/>-->
+                    <!--<Button text="Tamamla" id="tamamlaBtn" press="onTamamla" visible="{InputModel>/ButtonModelEdit1}"-->
+                    <!--  enabled="{InputModel>/ButtonModelEnabled1Tm}"/>-->
+                    <!--<Button text="Revize" id="revizeBtn" press="onRevize" visible="{InputModel>/ButtonModelEdit1}" enabled="{InputModel>/ButtonModelEnabled1Tm}"/>-->
+                    <!--<Button text="İsteği Reddet" id="istegiReddetBtn" press="onopenRet" visible="{InputModel>/ButtonModelEdit1}"-->
+                    <!--  enabled="{InputModel>/ButtonModelEnabled1Red}"/>-->
+                    <!--<Button text="Değişiklikleri Kaydet" id="idKaydet" press="onDanDeg" type="Transparent" visible="{InputModel>/ButtonModelEdit7}"/>-->
+                    <Button text="Efor Onay" id="eforOnayBtnYeni" press="onEforOnay" visible="false" enabled="false"/>
+                    <Button text="Tamamla" id="tamamlaBtnYeni" press="onTamamla" visible="false" enabled="false"/>
+                    <Button text="Revize" id="revizeBtnYeni" press="onRevize" visible="false" enabled="false"/>
+                    <!--<Button text="İsteği Reddet"  press="onopenRet" visible="true" enabled="false"/>-->
+                    <Button text="Değişiklikleri Kaydet" id="idKaydetYeni" press="onDanDeg" type="Transparent" visible="false"/>
+                    <!--<Button text="Kaydet" id="kaydetBtn" press="onSave" visible="{InputModel>/ButtonModelEdit2}"/>-->
+                    <!--<Button text="Durum Statü Değiştir" id="kaydetBtn" press="onStatuD" visible="{InputModel>/ButtonModelEdit2}"/>-->
+                    <!--<Button type="Accept" enabled="false" id="istekAcBtn" text="İstek Aç" press="onCreateTalep" visible="false"/>-->
+                    <!--<Button text="Proje Değiştir" press="onSaveProje" visible="{InputModel>/ButtonModelEdit6}" type="Transparent"/>-->
+                    <!--<Button text="Durum Statü Değiştir" press="onSaveStatu" visible="{InputModel>/ButtonModelEdit6}" type="Transparent"/>-->
+                    <!--<Button text="İstek Tipi Değiştir" press="onChangeIstkTp" visible="{InputModel>/ButtonModelEdit6}" type="Transparent"/>-->
+                  </semantic:customFooterContent>
+                  <semantic:content>
+                    <ObjectHeader id="oh1" responsive="true" binding="{oViewModel>/tabledetail/0}" showMarkers="false" markFlagged="false" markFavorite="false"
+                      numberState="Success" backgroundDesign="Translucent">
+                      <attributes>
+                        <ObjectAttribute title="İstek Durum"
+                          text="{= ${oViewModel>Statu} === '01' ? 'Efor Bekleniyor' : ${oViewModel>Statu} === '02' ? 'Efor Onayı Bekleniyor' : ${oViewModel>Statu} === '03' ? 'Atama Bekleniyor' : ${oViewModel>Statu} === '04' ?
+ 'Analiz':${oViewModel>Statu} === '05' ? '+
+Yapılıyor' :${oViewModel>Statu} === '06' ? 'Test' :${oViewModel>Statu} === '07' ? 'Müşteri Onayı Bekleniyor' :${oViewModel>Statu} === '08' ? 'Müşteri Revize Talebi' :${oViewModel>Statu} === '09' ? 'İstek Reddedildi' : ${oViewModel>Statu} === '10' ? 'Tamamlandı' :${oViewModel>Statu} === '20' ? 'TS Doküman Hazırlığı' :${oViewModel>Statu} === '21' ? 'Modül Uyarlama' :${oViewModel>Statu} === '22' ? 'Kod Geliştirme' :${oViewModel>Statu} === '30' ? 'Danışman Testi' : ${oViewModel>Statu} === '31' ? 'Kullanıcı Testinde' : ${oViewModel>Statu} === '32' ? 'Canlı Sistem Testinde' :'' }"/>
+                      </attributes>
+                      <statuses>
+                        <ObjectStatus title="Ana İstek No" text="{oViewModel>Customreqid}" state="Warning"/>
+                      </statuses>
+                      <statuses>
+                        <ObjectStatus title="İstek No" text="{oViewModel>Requisitionid}" state="Warning"/>
+                      </statuses>
+                    </ObjectHeader>
+                    <IconTabBar id="idIconTabBar" select=".onFilterSelect" class="sapUiResponsiveContentPadding">
+                      <items>
+                        <IconTabFilter icon="sap-icon://paper-plane" iconColor="Default" text="Görüşme" key="TList">
+                          <FeedInput id="FeedInput" post="onPost" icon="sap-icon://message-popup" class="sapUiSmallMarginTopBottom" buttonTooltip="gönder"/>
+                          <Button width="100%" id="dosyayukle" text="Dosya Yükle" press="onDosyaYukle" type="Attention" visible="false"/>
+                          <List showSeparators="Inner" items="{oViewModel>/talepMsg}">
+                            <FeedListItem sender="{oViewModel>Username}" icon="sap-icon://message-popup" senderPress="onSenderPress" iconPress="onIconPress"
+                              iconDensityAware="false"
+                              timestamp="{path:'oViewModel>Ydate', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd.MM.yyyy' , UTC: true }} / {path:'oViewModel>Ytime/ms', type:'sap.ui.model.type.Time', formatOptions: {UTC: true ,source: {
+ pattern : 'timest+
+amp'}, pattern : 'HH:mm:ss'}}"
+                              text="{oViewModel>Message}" convertLinksToAnchorTags="All" actions="{ path: 'oViewModel>tableDocShow3', templateShareable: false }">
+                              <FeedListItemAction text="{oViewModel>Fname}" icon="{oViewModel>Icon}" key="{oViewModel>url}" press="onActionPressed"/>
+                            </FeedListItem>
+                            <!--timestamp="{path:'oViewModel>Ydate', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd.MM.yyyy' , UTC: true }} / {path:'oViewModel>Ytime/ms', type:'sap.ui.model.type.Time', formatOptions: {UTC: true , source :
+ { pattern : 't+
+imestamp'}, pattern : 'HH:mm:ss'}}"-->
+                          </List>
+                        </IconTabFilter>
+                        <IconTabFilter icon="sap-icon://attachment-e-pub" iconColor="Critical" text="Ekler" key="EList">
+                          <UploadCollection class="sapUiTinyMarginBegin sapUiTinyMarginTop" maximumFilenameLength="100" maximumFileSize="100"
+                            busy="{worklistView>/screenOptions/busyUploadCollect}" multiple="false" items="{ path: 'DocList>/tableDocShow', templateShareable: false }"
+                            instantUpload="false" uploadEnabled="false">
+                            <items>
+                              <UploadCollectionItem documentId="{DocList>Docid}" fileName="{DocList>Fname}" mimeType="{DocList>Mimetype}" url="{DocList>url}"
+                                enableEdit="false" enableDelete="false" visibleDelete="false" visibleEdit="false" selected="false">
+                                <attributes>
+                                  <ObjectAttribute title="Oluşturan" text="{DocList>Yaratan}"/>
+                                  <ObjectAttribute title="Oluşturulma Tarihi"
+                                    text="{path:'DocList>Tarih', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd.MM.yyyy'}}"/>
+                                  <ObjectAttribute title="Oluşturulma Saati"
+                                    text="{path:'DocList>Saat/ms', type:'sap.ui.model.type.Time', formatOptions: { source : { pattern : 'timestamp'}, pattern : 'HH:mm:ss'}}"/>
+                                </attributes>
+                              </UploadCollectionItem>
+                            </items>
+                          </UploadCollection>
+                        </IconTabFilter>
+                        <IconTabFilter icon="sap-icon://activity-items" iconColor="Positive" text="İstek Detayları" key="IList">
+                          <f:Form id="FormDisplay480_12120Dual2" editable="false" title="İstek Detayları" binding="{oViewModel>/tabledetail/0}">
+                            <f:layout>
+                              <f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
+                                emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+                            </f:layout>
+                            <f:formContainers>
+                              <f:FormContainer>
+                                <f:formElements>
+                                  <!--<f:FormElement label="reqType">-->
+                                  <f:FormElement label="İstek Tipi">
+                                    <f:fields>
+                                      <Select id="TalepTip" items="{oViewBindModel>/TalepTipiBilgileri}" forceSelection="true" change=".onTalepTip"
+                                        selectedKey="{oViewModel>Requisitiontype}" enabled="false">
+                                        <core:ListItem key="{oViewBindModel>DomvalueL}" text="{oViewBindModel>Ddtext}"/>
+                                        <layoutData>
+                                          <l:GridData span="XL3 L8 M8 S10"/>
+                                        </layoutData>
+                                      </Select>
+                                    </f:fields>
+                                  </f:FormElement>
+                                  <f:FormElement label="Öncelik">
+                                    <f:fields>
+                                      <Select id="Oncelik" items="{oViewBindModel>/OncelikBilgileri}" forceSelection="false" change=".onOncelik"
+                                        selectedKey="{oViewModel>Priority}" enabled="false">
+                                        <core:ListItem key="{oViewBindModel>DomvalueL}" text="{oViewBindModel>Ddtext}"/>
+                                        <layoutData>
+                                          <l:GridData span="XL3 L8 M8 S3"/>
+                                        </layoutData>
+                                      </Select>
+                                    </f:fields>
+                                  </f:FormElement>
+                                  <f:FormElement label="Başlık">
+                                    <f:fields>
+                                      <TextArea id="header" value="{oViewModel>Header}" editable="false" rows="2"/>
+                                    </f:fields>
+                                  </f:FormElement>
+                                  <f:FormElement label="Açıklama">
+                                    <f:fields>
+                                      <TextArea id="Aciklama" value="{oViewModel>Description}" editable="false" rows="6"/>
+                                    </f:fields>
+                                  </f:FormElement>
+                                  <f:FormElement label="Proje Tanımı">
+                                    <f:fields>
+                                      <TextArea id="PTanim" value="{oViewModel>Tanim}" editable="false" rows="2" maxLength="100"/>
+                                    </f:fields>
+                                  </f:FormElement>
+                                  <f:FormElement label="Modül" visible="true">
+                                    <f:fields>
+                                      <!--<Select id="Modul" items="{oViewBindModel>/ModulBilgileri}" forceSelection="false" change=".onModul" selectedKey="{oViewModel>Ymodule}"
+                              enabled="{InputModel>/InputModelEdit1}" visible="{InputModel>/ButtonModelEdit1}">
+                              <core:ListItem key="{oViewBindModel>DomvalueL}" text="{oViewBindModel>Ddtext}"/>
+                              <layoutData>
+                                <l:GridData span="XL3 L8 M8 S3"/>
+                              </layoutData>
+                            </Select>-->
+                                      <!--enabled="{InputModel>/ButtonModelEdit4}"  -->
+                                      <MultiInput width="auto" id="multiInput" value="{oViewModel>Modulmulti}" suggestionItems="{oViewBindModel>/ModulBilgileri}"
+                                        valueHelpRequest="handleValueHelp" showValueHelp="true" valueHelpOnly="true" enabled="false" tokenChange="onTokenChange">
+                                        <core:Item key="{oViewBindModel>DomvalueL}" text="{oViewBindModel>Ddtext}"/>
+                                      </MultiInput>
+                                    </f:fields>
+                                  </f:FormElement>
+                                  <f:FormElement label="Proje" visible="true">
+                                    <f:fields>
+                                      <Select id="Proje" items="{oViewModel>/tableproje}" forceSelection="false" change=".onProje" selectedKey="{oViewModel>Proje}"
+                                        enabled="false">
+                                        <core:ListItem key="{oViewModel>Proje}" text="{oViewModel>Proje}"/>
+                                        <!--  <core:ListItem key="{oViewModel>Proje} - {oViewModel>Modul}" text="{oViewModel>Proje} - {oViewModel>Modul}"/>-->
+                                        <layoutData>
+                                          <l:GridData span="XL3 L8 M8 S3"/>
+                                        </layoutData>
+                                      </Select>
+                                    </f:fields>
+                                  </f:FormElement>
+                                  <!--  <f:FormElement label="Ticket" visible="{InputModel>/InputModelVisible}">
+                          <f:fields>
+                            <Select id="Ticket" items="{oViewModel>/tabletiket}" forceSelection="false" change=".onTiket" selectedKey="{oViewModel>Actticket}"
+                              enabled="{InputModel>/ButtonModelEdit4}">
+                              <core:ListItem key="{oViewModel>AltTakipNo}" text="{oViewModel>AnaTakipNo}-{oViewModel>AltTakipNo}"/>
+                              <layoutData>
+                                <l:GridData span="XL3 L8 M8 S3"/>
+                              </layoutData>
+                            </Select>
+                          </f:fields>
+                        </f:FormElement>-->
+                                  <f:FormElement label="Öngörülen Efor">
+                                    <f:fields>
+                                      <Input id="Oefor"
+                                        value="{path:'oViewModel>Estimatedeffort1',type : 'sap.ui.model.odata.type.String',constraints: { isDigitSequence : true }}" type="Number"
+                                        editable="false" maxLength="6" change="onOefor"/>
+                                    </f:fields>
+                                  </f:FormElement>
+                                  <!--    <f:FormElement label="Fiili Efor">
+                          <f:fields>
+                            <Input id="Fefor" value="{path:'oViewModel>Actualeffort',type : 'sap.ui.model.odata.type.String',constraints: { isDigitSequence : true }}"
+                              type="Number" editable="{InputModel>/ButtonModelEdit4}" maxLength="6" change="onFefor"/>
+                          </f:fields>
+                        </f:FormElement>-->
+                                  <f:FormElement label="Termin">
+                                    <f:fields>
+                                      <!--  <Input id="Termin" value="{path:'oViewModel>Deadline',type : 'sap.ui.model.odata.type.String',constraints: { isDigitSequence : true }}"
+                              type="Number" editable="{InputModel>/ButtonModelEdit}" maxLength="6" change="onTefor"/>-->
+                                      <DatePicker id="Termin"
+                                        value="{path:'oViewModel>Deadline', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd.MM.yyyy' , UTC: true }}" editable="false"
+                                        change="onTefor"></DatePicker>
+                                    </f:fields>
+                                  </f:FormElement>
+                                  <f:FormElement label="" id="radioefor" visible="false">
+                                    <f:fields>
+                                      <RadioButtonGroup id="rbg3" columns="5" valueState="Success" class="sapUiMediumMarginBottom" enabled="false"
+                                        selectedIndex="{oViewModel>Eforonay}">
+                                        <RadioButton id="RB1" text="Efor Onayı Al"/>
+                                        <RadioButton id="RB2" text="Efor Onayı Alma"/>
+                                      </RadioButtonGroup>
+                                    </f:fields>
+                                  </f:FormElement>
+                                </f:formElements>
+                              </f:FormContainer>
+                            </f:formContainers>
+                          </f:Form>
+                          <f:Form id="FormDisplay480_12120Dual" editable="false" title="Danışman Atama" binding="{oViewModel>/tabledetail/0}" visible="true">
+                            <f:layout>
+                              <f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
+                                emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+                            </f:layout>
+                            <f:formContainers>
+                              <f:FormContainer>
+                                <f:formElements>
+                                  <f:FormElement label="Danışman Adı">
+                                    <f:fields>
+                                      <MultiInput id="Danisman" value="{oViewModel>Multiconsultant}" editable="false" showValueHelp="true" valueHelpOnly="true"
+                                        valueHelpRequest="handleTableSelectDialogPress" tokenChange="siciltokenChange"/>
+                                    </f:fields>
+                                  </f:FormElement>
+                                </f:formElements>
+                              </f:FormContainer>
+                            </f:formContainers>
+                          </f:Form>
+                          <f:Form id="FormDisplay480_12120Dual4" editable="false" title="Durum Güncelle" binding="{oViewModel>/tabledetail/0}" visible="false">
+                            <f:layout>
+                              <f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
+                                emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+                            </f:layout>
+                            <f:formContainers>
+                              <f:FormContainer>
+                                <f:formElements>
+                                  <f:FormElement label="Statu Güncelle">
+                                    <f:fields>
+                                      <Select id="DStatu" items="{oViewBindModel>/StatuBilgileri}" forceSelection="false" change=".onDStatu" selectedKey="{oViewModel>Statu}"
+                                        enabled="false">
+                                        <core:ListItem key="{oViewBindModel>DomvalueL}" text="{oViewBindModel>Ddtext}"/>
+                                        <layoutData>
+                                          <l:GridData span="XL3 L8 M8 S3"/>
+                                        </layoutData>
+                                      </Select>
+                                    </f:fields>
+                                  </f:FormElement>
+                                </f:formElements>
+                              </f:FormContainer>
+                            </f:formContainers>
+                          </f:Form>
+                        </IconTabFilter>
+                        <IconTabFilter icon="sap-icon://customer-history" iconColor="Neutral" text="Geçmiş" key="GList">
+                          <!--<smartFilterBar:SmartFilterBar id="smartFilterBar" entitySet="GetHistorySet">
+                  <smartFilterBar:controlConfiguration>
+                    <smartFilterBar:ControlConfiguration key="IvReqid" visibleInAdvancedArea="true" preventInitialDataFetchInValueHelpDialog="false"></smartFilterBar:ControlConfiguration>
+                  </smartFilterBar:controlConfiguration>
+                </smartFilterBar:SmartFilterBar>-->
+                          <!--<smartTable:SmartTable id="smartCMMGiris" showTablePersonalisation="true" entitySet="GetHistorySet" class="sapUiMediumMarginTop"
+                  initiallyVisibleFields="Nextstatu,Requisitionstatu,Yuser,Userdescription"
+                  requestAtLeastFields="Nextstatu,Requisitionstatu,Yuser,Userdescription" visible="{view>/pressedAbsid}"
+                  app:dateFormatSettings='\{"pattern":"dd.MM.yyyy"\}' beforeExport="onBeforeExport" smartVariant="pageVariantCMGiris"
+                  showFullScreenButton="true" tableType="Table" useExportToExcel="true" useVariantManagement="true" useTablePersonalisation="true"
+                  header="Geçmiş" showRowCount="true" beforeRebindTable="onBeforeRebindTable" persistencyKey="pKeyCMGiris" smartFilterId="smartFilterBar">-->
+                          <ui:Table id="idTableCMMGirisRaporlama" rows="{oViewModel>/tableCallCenter}" selectionMode="None" visibleRowCount="8">
+                            <ui:columns>
+
+                               <ui:Column width="15rem" sortProperty="Requisitionstatu" filterProperty="Requisitionstatu" sorted="true" filtered="true">
+                                <Label text="Önceki Durum"/>
+                                <ui:template>
+                                  <Text
+                                    text="{= ${oViewModel>Requisitionstatu} === '01' ? 'Yeni İstek Yaratıldı' : ${oViewModel>Requisitionstatu} === '02' ? 'Efor Bekleniyor' : ${oViewModel>Requisitionstatu} === '03' ? 'Atama Bekleniyor' :
+ ${oViewModel>Requisitionstatu} ===+
+ '04' ? 'Analiz':${oViewModel>Requisitionstatu} === '05' ? 'Yapılıyor' :${oViewModel>Requisitionstatu} === '06' ? 'Test' :${oViewModel>Requisitionstatu} === '07' ? 'Müşteri Onayı Bekleniyor':${oViewModel>Requisitionstatu} === '08' ? 'Müşteri Revize Talebi' :${oViewModel>Requisitionstatu} === '09' ? 'İstek Reddedildi' :${oViewModel>Requisitionstatu} === '10' ? 'Tamamlandı' : ${oViewModel>Requisitionstatu} === '20' ? 'TS Doküman Hazırlığı' :${oViewModel>Requisitionstatu} === '21' ? 'Modül Uyarlama' :${oViewModel>Requisitionstatu} === '22' ? 'Kod Geliştirme' :${oViewModel>Requisitionstatu} === '30' ? 'Danışman Testi' :''}"
+                                    wrapping="false"/>
+                                </ui:template>
+                              </ui:Column>
+                               <ui:Column width="15rem" sortProperty="Nextstatu" filterProperty="Nextstatu" sorted="true" filtered="true">
+                                <Label text="Sonraki Durum"/>
+                               <ui:template>
+                                  <Text text="{ path: 'oViewModel>Nextstatu', formatter: '.formatNextstatu' }" wrapping="false"/>
+                                </ui:template>
+                              </ui:Column>
+                              <ui:Column width="8rem" sortProperty="Requisitionuser" filterProperty="Requisitionuser" sorted="true" filtered="true">
+                                <Label text="Yaratan/Atanan"/>
+                                <ui:template>
+                                  <Text text="{oViewModel>Yuser}" wrapping="false"/>
+                                </ui:template>
+                              </ui:Column>
+                              <ui:Column width="10rem" sortProperty="AltTakipNo" filterProperty="AltTakipNo" sorted="true" filtered="true">
+                                <Label text="Alt Takip No"/>
+                                <ui:template>
+                                  <Text text="{oViewModel>AltTakipNo}" wrapping="false"/>
+                                </ui:template>
+                              </ui:Column>
+                              <ui:Column width="10rem" sortProperty="Customticket" filterProperty="Customticket" sorted="true" filtered="true">
+                                <Label text="Müşteri Ticket"/>
+                                <ui:template>
+                                  <Text text="{oViewModel>Customticket}" wrapping="false"/>
+                                </ui:template>
+                              </ui:Column>
+                              <ui:Column width="10rem" sortProperty="Gun" filterProperty="Gun" sorted="true" filtered="true">
+                                <Label text="Gün"/>
+                                <ui:template>
+                                  <Text text="{oViewModel>Gun}" wrapping="false"/>
+                                </ui:template>
+                              </ui:Column>
+                              <ui:Column width="6rem" sortProperty="Ydate" filterProperty="Ydate" sorted="true" filtered="true">
+                                <Label text="Tarih"/>
+                                <ui:template>
+                                  <Text text="{path:'oViewModel>Ydate', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd.MM.yyyy' , UTC: true }}"
+                                    wrapping="false"/>
+                                </ui:template>
+                              </ui:Column>
+                              <ui:Column width="6rem" sortProperty="Ytime" filterProperty="Ytime" sorted="true" filtered="true">
+                                <Label text="Saat"/>
+                                <ui:template>
+                                  <Text
+                                    text="{path:'oViewModel>Ytime/ms', type:'sap.ui.model.type.Time', formatOptions: {UTC: true , source : { pattern : 'timestamp'}, pattern : 'HH:mm:ss'}}"
+                                    wrapping="false"/>
+                                </ui:template>
+                              </ui:Column>
+                            </ui:columns>
+                          </ui:Table>
+                          <!--  <smartTable:customToolbar></smartTable:customToolbar>
+                </smartTable:SmartTable>-->
+                        </IconTabFilter>
+                        <IconTabFilter icon="sap-icon://create-form" iconColor="Critical" text="Yeni İstek Aç" key="YForm" visible="{InputModel>/ButtonV}">
+                          <VBox class="sapUiSmallMargin">
+                            <f:Form id="FormDisplay480_12120Dual5" editable="false" title="İstek Açan Bilgileri" binding="{FormModel>/RequestItems/0}">
+                              <f:layout>
+                                <f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
+                                  emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="2" columnsM="2" singleContainerFullSize="false"/>
+                              </f:layout>
+                              <f:formContainers>
+                                <f:FormContainer>
+                                  <f:formElements>
+                                    <f:FormElement label="Adı Soyadı">
+                                      <f:fields>
+                                        <Input id="AdSoyad" value="{FormModel>Userdescription}" editable="true"/>
+                                      </f:fields>
+                                    </f:FormElement>
+                                    <f:FormElement label="Başlık">
+                                      <f:fields>
+                                        <Input id="Header" value="{FormModel>Header}" editable="true" required="true"/>
+                                      </f:fields>
+                                    </f:FormElement>
+                                    <!--  <f:FormElement label="Departman">
+                              <f:fields>
+                                <Select id="Departman" items="{oViewBindModel>/DepartmanBilgileri}" forceSelection="true" change=".onTalepTip"
+                                  selectedKey="{InputModel>/FormRole}" enabled="{InputModel>/InputModelEdit1}">
+                                  <core:ListItem key="{oViewBindModel>DomvalueL}" text="{oViewBindModel>Ddtext}"/>
+                                  <layoutData>
+                                    <l:GridData span="XL3 L8 M8 S3"/>
+                                  </layoutData>
+                                </Select>
+                              </f:fields>
+                            </f:FormElement>-->
+                                  </f:formElements>
+                                </f:FormContainer>
+                                <f:FormContainer>
+                                  <f:formElements>
+                                    <f:FormElement label="Şirket">
+                                      <f:fields>
+                                        <Input id="idSirket" value="{FormModel>Company}" editable="true"/>
+                                      </f:fields>
+                                    </f:FormElement>
+                                  </f:formElements>
+                                </f:FormContainer>
+                              </f:formContainers>
+                            </f:Form>
+                            <f:Form id="FormDisplay480_12120Dual6" editable="false" title="İstek Detayları" binding="{FormModel>/RequestItems/0}">
+                              <f:layout>
+                                <f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
+                                  emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="2" columnsM="2" singleContainerFullSize="false"/>
+                              </f:layout>
+                              <f:formContainers>
+                                <f:FormContainer>
+                                  <f:formElements>
+                                    <f:FormElement label="İstek Tipi">
+                                      <f:fields>
+                                        <Select id="TalepTip2" items="{oViewBindModel>/TalepTipiBilgileri}" forceSelection="true" change=".onTalepTip" selectedKey="01"
+                                          enabled="true">
+                                          <core:ListItem key="{oViewBindModel>DomvalueL}" text="{oViewBindModel>Ddtext}"/>
+                                          <layoutData>
+                                            <l:GridData span="XL3 L8 M8 S3"/>
+                                          </layoutData>
+                                        </Select>
+                                      </f:fields>
+                                    </f:FormElement>
+                                    <f:FormElement label="Öncelik">
+                                      <f:fields>
+                                        <Select id="Oncelik2" items="{oViewBindModel>/OncelikBilgileri}" forceSelection="false" change=".onOncelik" selectedKey="03" enabled="true">
+                                          <core:ListItem key="{oViewBindModel>DomvalueL}" text="{oViewBindModel>Ddtext}"/>
+                                          <layoutData>
+                                            <l:GridData span="XL3 L8 M8 S3"/>
+                                          </layoutData>
+                                        </Select>
+                                      </f:fields>
+                                    </f:FormElement>
+                                    <!--  <f:FormElement label="Modül">
+                              <f:fields>
+                                <Select id="Modul" items="{oViewBindModel>/ModulBilgileri}" forceSelection="false" change=".onModul" selectedKey="01"
+                                  enabled="{InputModel>/InputModelEdit}">
+                                  <core:ListItem key="{oViewBindModel>DomvalueL}" text="{oViewBindModel>Ddtext}"/>
+                                  <layoutData>
+                                    <l:GridData span="XL3 L8 M8 S3"/>
+                                  </layoutData>
+                                </Select>
+                              </f:fields>
+                            </f:FormElement>-->
+                                    <f:FormElement label="Ticket No">
+                                      <f:fields>
+                                        <Input id="idTicket" value="{FormModel>Customticket}" maxLength="20"/>
+                                      </f:fields>
+                                    </f:FormElement>
+                                    <f:FormElement label="Ana İstek No">
+                                      <f:fields>
+                                        <Input id="idIstek" value="{FormModel>Customreqid}" maxLength="20" showValueHelp="true" valueHelpRequest="onSHAnaTicketNo"/>
+                                      </f:fields>
+                                    </f:FormElement>
+                                  </f:formElements>
+                                </f:FormContainer>
+                                <f:FormContainer>
+                                  <f:formElements>
+                                    <f:FormElement label="Açıklama">
+                                      <f:fields>
+                                        <TextArea id="Aciklama2" value="{FormModel>Description}" editable="true" rows="8" maxLength="1300"/>
+                                      </f:fields>
+                                    </f:FormElement>
+                                    <!--  <f:FormElement label="Öngörülen Efor">
+                              <f:fields>
+                                <Input id="Oefor" value="{FormModel>Estimatedeffort}" type="Number" editable="{InputModel>/InputModelEdit}" maxLength="6"/>
+                              </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="Fiili Efor">
+                              <f:fields>
+                                <Input id="Fefor" value="{FormModel>Actualeffort}" type="Number" editable="{InputModel>/InputModelEdit}" maxLength="6"/>
+                              </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="Termin">
+                              <f:fields>
+                                <Input id="Termin" value="{FormModel>Deadline}" type="Number" editable="{InputModel>/InputModelEdit}" maxLength="6"/>
+                              </f:fields>
+                            </f:FormElement>-->
+                                  </f:formElements>
+                                </f:FormContainer>
+                              </f:formContainers>
+                            </f:Form>
+                            <f:Form id="FormDisplay480_12120Dual3" editable="false" title="" binding="{oViewModel>/itemsTaslakmasraf/0}">
+                              <f:layout>
+                                <f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
+                                  emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="2" columnsM="2" singleContainerFullSize="true"/>
+                              </f:layout>
+                              <f:formContainers>
+                                <f:FormContainer>
+                                  <f:formElements>
+                                    <f:FormElement>
+                                      <f:fields>
+                                        <UploadCollection id="uploadColIkDokuman" maximumFileSize="100000" multiple="true" fileSizeExceed="onFileSizeExceed"
+                                          fileDeleted="onFileDeleted" typeMissmatch="onTypeMissmatch" change="onChange" beforeUploadStarts="onBeforeUploadStarts"
+                                          uploadComplete="onUploadComplete" mode="Delete"/>
+                                      </f:fields>
+                                    </f:FormElement>
+                                  </f:formElements>
+                                </f:FormContainer>
+                              </f:formContainers>
+                            </f:Form>
+                          </VBox>
+                        </IconTabFilter>
+                      </items>
+                    </IconTabBar>
+                  </semantic:content>
+                </semantic:DetailPage>
+              </detailPages>
+            </SplitContainer>
+          </content>
+          <footer >
+            <m:OverflowToolbar >
+              <m:ToolbarSpacer/>
+              <m:Button type="Accept" id="istekAcBtn1" text="İstek Aç" press="onCreateTalep" visible="false"/>
+              <m:Button type="Reject" id="iptalEtBtn" text="İptal Et" press="onCreateIptal" visible="false"/>
+              <!--<m:Button type="Emphasized" id="excelBtn" text="Excel'e Aktar" press="onExcelExport" visible="{InputModel>/ButtonV}"/>-->
+            </m:OverflowToolbar>
+          </footer>
+        </Page>
+      </pages>
+    </App>
+  </Shell>
+</mvc:View>

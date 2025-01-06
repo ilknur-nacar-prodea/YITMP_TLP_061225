@@ -1,0 +1,1 @@
+sap.ui.define(["app/YITMP_TLP/controller/login.controller"],function(n){"use strict";QUnit.module("login Controller");QUnit.test("I should test the login controller",function(o){var t=new n;t.onInit();o.ok(t)})});

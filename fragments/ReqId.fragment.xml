@@ -1,0 +1,7 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog id="reqIdSelectDialogID" title="{i18n>Requisitionid}" items="{/GetTable2Set}" search="onSearchReqIdValueHelp"
+		confirm="onConfirmReqIdValueHelp" cancel="onCloseReqIdValueHelp">
+		<StandardListItem id="reqIdListItemID" title="{Requisitionid}" iconDensityAware="false" iconInset="false" type="Active"/>
+	</SelectDialog>
+</core:FragmentDefinition>
+<!--GetTable2Set-->

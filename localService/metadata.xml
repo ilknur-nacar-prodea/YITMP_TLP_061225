@@ -1,0 +1,83 @@
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+	xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+	<edmx:DataServices m:DataServiceVersion="2.0">
+		<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="YITMP_001_SRV" xml:lang="tr" sap:schema-version="1">
+			<EntityType Name="GetDomain" sap:content-version="1">
+				<Key><PropertyRef Name="Domname"/></Key><Property Name="IvDomain" Type="Edm.String" Nullable="false" MaxLength="100" sap:unicode="false" sap:label="100 karakter"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Domname" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="Tanım kümesi"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Valpos" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Value key" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Ddlanguage" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Lang." sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="DomvalueL" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Lower Value"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="DomvalueH" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Dom.upper limit"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Ddtext" Type="Edm.String" Nullable="false" MaxLength="60" sap:unicode="false" sap:label="Kısa tanım" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="DomvalLd" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Lower limit"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="DomvalHd" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Upper Limit"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Appval" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="App" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/></EntityType>
+			<EntityType Name="UserAuth" sap:content-version="1">
+				<Key><PropertyRef Name="IPassword"/><PropertyRef Name="IUser"/></Key><Property Name="IPassword" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="Password" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="EUserdesc" Type="Edm.String" Nullable="false" MaxLength="255" sap:unicode="false" sap:label="Char255" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="IUser" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="Dallanma adı" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="EReturn" Type="Edm.String" Nullable="false" MaxLength="255" sap:unicode="false" sap:label="Char255" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="ERole" Type="Edm.String" Nullable="false" MaxLength="200" sap:unicode="false" sap:label="Metin(200 krk.)"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/></EntityType>
+			<EntityType Name="File" sap:content-version="1">
+				<Key><PropertyRef Name="IvGuid"/></Key><Property Name="IvGuid" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="20 karakter" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><NavigationProperty Name="FILENP" Relationship="YITMP_001_SRV.AssoFile" FromRole="FromRole_AssoFile" ToRole="ToRole_AssoFile"/></EntityType>
+			<EntityType Name="FileST" sap:content-version="1">
+				<Key><PropertyRef Name="IvGuid"/></Key><Property Name="IvGuid" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="20 karakter" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/></EntityType>
+			<EntityType Name="CreateRequest" sap:content-version="1">
+				<Key><PropertyRef Name="Requisitiontype"/></Key><Property Name="Requisitionid" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Reuisition ID"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Ereqtype" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Requisition Type"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Requisitionuser" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Requisition User"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Userdescription" Type="Edm.String" Nullable="false" MaxLength="255" sap:unicode="false" sap:label="Description User"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Requisitiondate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Tarih" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Requisitiontime" Type="Edm.Time" Precision="0" sap:unicode="false" sap:label="Saat" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Requisitiontype" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Requisition Type"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Priority" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Priority" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Deadline" Type="Edm.String" Nullable="false" MaxLength="6" sap:unicode="false" sap:label="Deadline" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Description" Type="Edm.String" Nullable="false" MaxLength="1300" sap:unicode="false" sap:label="Description"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Actualeffort" Type="Edm.String" Nullable="false" MaxLength="6" sap:unicode="false" sap:label="Actual Effort"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Estimatedeffort" Type="Edm.String" Nullable="false" MaxLength="6" sap:unicode="false" sap:label="Estimated Effort"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Closingdate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Tarih" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Closingtime" Type="Edm.Time" Precision="0" sap:unicode="false" sap:label="Saat" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/><Property Name="Statu" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Statu" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Ymodule" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Module" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Evmessage" Type="Edm.String" Nullable="false" MaxLength="200" sap:unicode="false" sap:label="Metin(200 krk.)"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/></EntityType>
+			<EntityType Name="GetTable" sap:content-version="1">
+				<Key><PropertyRef Name="Requisitionid"/></Key><Property Name="IvDate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Tarih" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/><Property Name="IvModule" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Module" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="IvPriotry" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Priority" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="IvType" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Requisition Type"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="IvUname" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Requisition User"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Requisitionid" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Reuisition ID"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Requisitionuser" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Requisition User"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Userdescription" Type="Edm.String" MaxLength="255" sap:unicode="false" sap:label="Description User" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Requisitiondate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Tarih" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Requisitiontime" Type="Edm.Time" Nullable="false" Precision="0" sap:unicode="false" sap:label="Saat" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Requisitiontype" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Requisition Type"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Priority" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Priority" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Deadline" Type="Edm.String" Nullable="false" MaxLength="6" sap:unicode="false" sap:label="Deadline" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Description" Type="Edm.String" Nullable="false" MaxLength="1300" sap:unicode="false" sap:label="Description"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Actualeffort" Type="Edm.String" Nullable="false" MaxLength="6" sap:unicode="false" sap:label="Actual Effort"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Estimatedeffort" Type="Edm.String" Nullable="false" MaxLength="6" sap:unicode="false" sap:label="Estimated Effort"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Closingdate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Tarih" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Closingtime" Type="Edm.Time" Precision="0" sap:unicode="false" sap:label="Saat" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/><Property Name="Statu" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Statu" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Ymodule" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Module" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/></EntityType>
+			<Association Name="AssoFile" sap:content-version="1"><End Type="YITMP_001_SRV.File" Multiplicity="1" Role="FromRole_AssoFile"/><End Type="YITMP_001_SRV.FileST" Multiplicity="*" Role="ToRole_AssoFile"/></Association>
+			<EntityContainer Name="YITMP_001_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx"><EntitySet Name="GetDomainSet" EntityType="YITMP_001_SRV.GetDomain" sap:creatable="false" sap:updatable="false" sap:deletable="false"
+				sap:pageable="false" sap:content-version="1"/><EntitySet Name="UserAuthSet" EntityType="YITMP_001_SRV.UserAuth" sap:creatable="false" sap:updatable="false" sap:deletable="false"
+				sap:pageable="false" sap:content-version="1"/><EntitySet Name="FileSet" EntityType="YITMP_001_SRV.File" sap:creatable="false" sap:updatable="false" sap:deletable="false"
+				sap:pageable="false" sap:content-version="1"/><EntitySet Name="FileSTSet" EntityType="YITMP_001_SRV.FileST" sap:creatable="false" sap:updatable="false" sap:deletable="false"
+				sap:pageable="false" sap:content-version="1"/><EntitySet Name="CreateRequestSet" EntityType="YITMP_001_SRV.CreateRequest" sap:creatable="false" sap:updatable="false"
+				sap:deletable="false" sap:pageable="false" sap:content-version="1"/><EntitySet Name="GetTableSet" EntityType="YITMP_001_SRV.GetTable" sap:creatable="false" sap:updatable="false" sap:deletable="false"
+				sap:pageable="false" sap:content-version="1"/>
+				<AssociationSet Name="AssoFileSet" Association="YITMP_001_SRV.AssoFile" sap:creatable="false" sap:updatable="false" sap:deletable="false"
+					sap:content-version="1"><End EntitySet="FileSet" Role="FromRole_AssoFile"/><End EntitySet="FileSTSet" Role="ToRole_AssoFile"/></AssociationSet>
+			</EntityContainer><atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="./sap/YITMP_001_SRV/$metadata"/><atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="./sap/YITMP_001_SRV/$metadata"/></Schema>
+	</edmx:DataServices>
+</edmx:Edmx>
